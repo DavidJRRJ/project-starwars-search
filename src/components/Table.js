@@ -1,47 +1,42 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext } from 'react';
 import PlanetContext from '../context/PlanetContext';
 
 function Table() {
   const {
+    planets,
     filterByName: { name },
-    setName,
+    filterNumeric,
   } = useContext(PlanetContext);
-  const [planets, setPlanets] = useState([]);
 
-  useEffect(() => {
-    const url = 'https://swapi-trybe.herokuapp.com/api/planets/';
+  const filteredPlanets = planets
+    .filter((element) => element.name.toLowerCase().includes(name));
 
-    const fetchData = async () => {
-      try {
-        const response = await fetch(url);
-        const json = await response.json();
-        const data = json.results;
-        for (let i = 0; i < data.length; i += 1) {
-          delete data[i].residents;
-        }
-        setPlanets(data);
-      } catch (error) {
-        console.log('error', error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  const filteredPlanets = planets.filter((element) => (
-    element.name.toLowerCase().includes(name)
-  ));
-
-  // console.log(filteredPlanets);
+  let filteredFinal = [...filteredPlanets];
+  filterNumeric.forEach(({ column, comparison, value }) => {
+    console.log(comparison);
+    switch (comparison) {
+    case 'maior que':
+      console.log(filteredFinal);
+      filteredFinal = filteredFinal.filter((planet) => (
+        parseInt(planet[column], 10) > parseInt(value, 10)
+      ));
+      break;
+    case 'menor que':
+      filteredFinal = filteredFinal.filter((planet) => (
+        parseInt(planet[column], 10) < parseInt(value, 10)
+      ));
+      break;
+    default:
+      filteredFinal = filteredFinal.filter((planet) => (
+        parseInt(planet[column], 10) === parseInt(value, 10)
+      ));
+      break;
+    }
+  });
+  console.log(filterNumeric);
 
   return (
     <table>
-      <input
-        type="text"
-        placeholder="Filter"
-        data-testid="name-filter"
-        onChange={ (e) => setName(e.target.value) }
-      />
       <thead>
         <tr>
           <th>Name</th>
@@ -60,7 +55,7 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        {filteredPlanets.map((element, index) => (
+        {filteredFinal.map((element, index) => (
           <tr key={ index }>
             <td>{element.name}</td>
             <td>{element.rotation_period}</td>
