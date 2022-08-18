@@ -62,6 +62,11 @@ function SearchNumber() {
       >
         Filtro
       </button>
+      {filterNumeric && filterNumeric.map((element) => (
+        <div key={ element.column }>
+          <span>{`${element.column} ${element.comparison} ${element.value}`}</span>
+        </div>
+      ))}
     </section>
   );
 }
