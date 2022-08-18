@@ -18,6 +18,17 @@ function SearchNumber() {
   const comparisonFilter = ['maior que', 'menor que', 'igual a'];
   const { column, comparision, value } = numFilter;
 
+  const singleFilterRemove = (filter) => {
+    const removeFilter = filterNumeric.filter(
+      (element) => element.column !== filter,
+    );
+    setNumeric(removeFilter);
+  };
+
+  const filterRemove = () => {
+    setNumeric([]);
+  };
+
   return (
     <section>
       <label htmlFor="column">
@@ -62,11 +73,25 @@ function SearchNumber() {
       >
         Filtro
       </button>
-      {filterNumeric && filterNumeric.map((element) => (
-        <div key={ element.column }>
-          <span>{`${element.column} ${element.comparison} ${element.value}`}</span>
-        </div>
-      ))}
+      <button
+        type="button"
+        data-testid="button-remove-filters"
+        onClick={ filterRemove }
+      >
+        Remover Filtros
+      </button>
+      {filterNumeric
+        && filterNumeric.map((element) => (
+          <div key={ element.column } data-testid="filter">
+            <span>{`${element.column} ${element.comparison} ${element.value}`}</span>
+            <button
+              type="button"
+              onClick={ () => singleFilterRemove(element.column) }
+            >
+              Remover
+            </button>
+          </div>
+        ))}
     </section>
   );
 }
