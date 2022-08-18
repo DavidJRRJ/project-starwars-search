@@ -39,11 +39,15 @@ function SearchNumber() {
           value={ column }
           onChange={ (e) => setNumFilter({ ...numFilter, column: e.target.value }) }
         >
-          {columnFilter.map((coluna) => (
-            <option key={ coluna } value={ coluna }>
-              {coluna}
-            </option>
-          ))}
+          {columnFilter
+            .filter(
+              (cln) => !filterNumeric.map((elm) => elm.column).includes(cln),
+            )
+            .map((coluna) => (
+              <option key={ coluna } value={ coluna }>
+                {coluna}
+              </option>
+            ))}
         </select>
       </label>
       <select

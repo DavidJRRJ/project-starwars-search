@@ -13,7 +13,7 @@ function Table() {
 
   let filteredFinal = [...filteredPlanets];
   filterNumeric.forEach(({ column, comparison, value }) => {
-    console.log(comparison);
+    // console.log(comparison);
     switch (comparison) {
     case 'maior que':
       console.log(filteredFinal);
