@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PlanetContext from '../context/PlanetContext';
 
 function SearchNumber() {
@@ -29,6 +29,14 @@ function SearchNumber() {
     setNumeric([]);
   };
 
+  const columnRepeatFilter = columnFilter.filter(
+    (cln) => !filterNumeric.some((element) => cln === element.column),
+  );
+
+  useEffect(() => {
+    setNumFilter((prev) => ({ ...prev, column: columnRepeatFilter[0] }));
+  }, [filterNumeric]);
+
   return (
     <section>
       <label htmlFor="column">
@@ -39,15 +47,11 @@ function SearchNumber() {
           value={ column }
           onChange={ (e) => setNumFilter({ ...numFilter, column: e.target.value }) }
         >
-          {columnFilter
-            .filter(
-              (cln) => !filterNumeric.map((elm) => elm.column).includes(cln),
-            )
-            .map((coluna) => (
-              <option key={ coluna } value={ coluna }>
-                {coluna}
-              </option>
-            ))}
+          {columnRepeatFilter.map((coluna) => (
+            <option key={ coluna } value={ coluna }>
+              {coluna}
+            </option>
+          ))}
         </select>
       </label>
       <select
