@@ -38,13 +38,14 @@ function SearchNumber() {
   }, [filterNumeric]);
 
   return (
-    <section>
+    <section className="search-number">
       <label htmlFor="column">
-        Coluna:
+        Filtros:
         <select
           data-testid="column-filter"
           name="column"
           value={ column }
+          className="filter-numeric"
           onChange={ (e) => setNumFilter({ ...numFilter, column: e.target.value }) }
         >
           {columnRepeatFilter.map((coluna) => (
@@ -56,6 +57,7 @@ function SearchNumber() {
       </label>
       <select
         data-testid="comparison-filter"
+        className="filter-numeric"
         name="comparison"
         value={ comparision }
         onChange={ (e) => setNumFilter({ ...numFilter, comparison: e.target.value }) }
@@ -69,20 +71,23 @@ function SearchNumber() {
       <input
         type="number"
         data-testid="value-filter"
+        className="filter-numeric"
         name="value"
         value={ value }
         onChange={ (e) => setNumFilter({ ...numFilter, value: e.target.value }) }
       />
       <button
         type="button"
+        className="filter-numeric"
         data-testid="button-filter"
         name="btnFilter"
         onClick={ () => setNumeric([...filterNumeric, numFilter]) }
       >
-        Filtro
+        Filtrar
       </button>
       <button
         type="button"
+        className="filter-numeric"
         data-testid="button-remove-filters"
         onClick={ filterRemove }
       >
@@ -91,8 +96,13 @@ function SearchNumber() {
       {filterNumeric
         && filterNumeric.map((element) => (
           <div key={ element.column } data-testid="filter">
-            <span>{`${element.column} ${element.comparison} ${element.value}`}</span>
+            <span
+              className="filter-numeric"
+            >
+              {`${element.column} ${element.comparison} ${element.value}`}
+            </span>
             <button
+              className="filter-numeric"
               type="button"
               onClick={ () => singleFilterRemove(element.column) }
             >

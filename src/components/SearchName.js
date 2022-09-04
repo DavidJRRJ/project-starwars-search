@@ -9,12 +9,14 @@ function SearchName() {
   };
 
   return (
-    <input
-      type="text"
-      data-testid="name-filter"
-      onChange={ handleChange }
-      placeholder="Name Filter"
-    />
+    <div className="input-name">
+      <input
+        type="text"
+        data-testid="name-filter"
+        onChange={ handleChange }
+        placeholder="Name Filter"
+      />
+    </div>
   );
 }
 

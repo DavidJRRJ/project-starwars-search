@@ -36,7 +36,7 @@ function Table() {
   console.log(filterNumeric);
 
   return (
-    <table>
+    <table className="tabela">
       <thead>
         <tr>
           <th>Name</th>
